@@ -155,6 +155,8 @@ android_library {
         "iconloader_base",
         "libGoogleFeed",
         "SettingsLib",
+        "bcsmartspace-google",
+        "SystemUIPluginLib",
         "view_capture"
     ],
     manifest: "AndroidManifest-common.xml",
