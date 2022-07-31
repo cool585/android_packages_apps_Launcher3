@@ -40,6 +40,7 @@
     <string name="interface_category_title">Interface</string>
     <string name="search_bar_category_title">Search bar</string>
     <string name="actions_category_title">Quick actions</string>
+    <string name="quickspace_category_title">At A Glance</string>
 
     <!-- Developer options -->
     <string name="dev_options_title">Developer options</string>
@@ -196,6 +197,8 @@
     <string name="short_parallax_summary">Enable full wallpaper scroll effect on smaller numbers of pages instead of cropping the wallpaper</string>
     <string name="single_page_center_title">Single page center</string>
     <string name="single_page_center_summary">Center wallpaper if only using a single page</string>
-=======
->>>>>>> parent of 3c41f29f3f (Launcher3: Bring back QuickSpace events)
+
+    <!-- Smartspace -->
+    <string name="smartspace_pref_title">At a Glance</string>
+    <string name="smartspace_pref_summary">Show smartspace at the top of home screen</string>
 </resources>
