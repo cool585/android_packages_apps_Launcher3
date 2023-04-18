@@ -155,6 +155,7 @@ android_library {
         "iconloader_base",
         "libGoogleFeed",
         "SettingsLib",
+        "libParticles",
         "bcsmartspace-google",
         "SystemUIPluginLib",
         "view_capture"
@@ -240,6 +241,13 @@ java_import {
     name: "libGoogleFeed",
     jars: [
         "libs/libGoogleFeed.jar",
+    ],
+}
+
+java_import {
+    name: "libParticles",
+    jars: [
+        "libs/libParticles.jar",
     ],
 }
 
