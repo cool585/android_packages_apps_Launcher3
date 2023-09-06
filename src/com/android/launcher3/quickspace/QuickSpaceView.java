@@ -128,28 +128,23 @@ public class QuickSpaceView extends FrameLayout implements AnimatorUpdateListene
     }
 
     private final void bindWeather(View container, TextView title, ImageView icon) {
-        if (!mWeatherAvailable) {
-            container.setVisibility(View.GONE);
-            return;
-        }
-        String weatherTemp = mController.getWeatherTemp();
-        if (weatherTemp == null || weatherTemp.isEmpty()) {
-            container.setVisibility(View.GONE);
-            return;
-        }
-        boolean hasGoogleApp = isPackageEnabled("com.google.android.googlequicksearchbox", getContext());
-        container.setVisibility(View.VISIBLE);
-        container.setOnClickListener(hasGoogleApp ? mActionReceiver.getWeatherAction() : null);
-        if (Utilities.useAlternativeQuickspaceUI(getContext())) {
-            if (mIsQuickEvent) {
-                title.setText(weatherTemp + " · ");
+        if (mWeatherAvailable) {
+            boolean hasGoogleApp = isPackageEnabled("com.google.android.googlequicksearchbox", getContext());
+            container.setVisibility(View.VISIBLE);
+            container.setOnClickListener(hasGoogleApp ? mActionReceiver.getWeatherAction() : null);
+            if (Utilities.useAlternativeQuickspaceUI(getContext())) {
+                if (mIsQuickEvent) {
+                    title.setText(mController.getWeatherTemp() + " · ");
+                } else {
+                    title.setText(" · " + mController.getWeatherTemp());
+                }
             } else {
-                title.setText(" · " + weatherTemp);
+                title.setText(mController.getWeatherTemp());
             }
-        } else {
-            title.setText(weatherTemp);
+            icon.setImageDrawable(mController.getWeatherIcon());
+            return;
         }
-        icon.setImageDrawable(mController.getWeatherIcon());
+        container.setVisibility(View.GONE);
     }
 
     private final void loadViews() {

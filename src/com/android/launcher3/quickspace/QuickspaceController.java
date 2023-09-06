@@ -28,8 +28,6 @@ import android.util.Log;
 
 import com.android.internal.util.crdroid.OmniJawsClient;
 
-import com.android.launcher3.R;
-import com.android.launcher3.Utilities;
 import com.android.launcher3.notification.NotificationKeyData;
 import com.android.launcher3.notification.NotificationListener;
 import com.android.launcher3.util.PackageUserKey;
@@ -44,7 +42,6 @@ public class QuickspaceController implements NotificationListener.NotificationsC
     private static final boolean DEBUG = false;
     private static final String TAG = "Launcher3:QuickspaceController";
 
-    private final Context mContext;
     private final Handler mHandler;
     private QuickEventsController mEventsController;
     private OmniJawsClient mWeatherClient;
@@ -64,7 +61,6 @@ public class QuickspaceController implements NotificationListener.NotificationsC
     }
 
     public QuickspaceController(Context context) {
-        mContext = context;
         mHandler = new Handler();
         mEventsController = new QuickEventsController(context);
         mWeatherClient = new OmniJawsClient(context);
@@ -74,9 +70,10 @@ public class QuickspaceController implements NotificationListener.NotificationsC
     }
 
     private void addWeatherProvider() {
-        if (!Utilities.isQuickspaceWeather(mContext)) return;
-        mWeatherClient.addObserver(this);
-        queryAndUpdateWeather();
+        if (mWeatherClient.isOmniJawsEnabled()) {
+            mWeatherClient.addObserver(this);
+            updateWeather();
+        }
     }
 
     public void addListener(OnDataListener listener) {
@@ -101,7 +98,7 @@ public class QuickspaceController implements NotificationListener.NotificationsC
     }
 
     public boolean isWeatherAvailable() {
-        return mWeatherClient != null && mWeatherClient.isOmniJawsEnabled();
+        return mWeatherInfo != null;
     }
 
     public Drawable getWeatherIcon() {
@@ -109,11 +106,8 @@ public class QuickspaceController implements NotificationListener.NotificationsC
     }
 
     public String getWeatherTemp() {
-        if (mWeatherInfo != null) {
-            String weatherTemp = mWeatherInfo.temp + mWeatherInfo.tempUnits;
-            return weatherTemp;
-        }
-        return null;
+        String weatherTemp = mWeatherInfo.temp + mWeatherInfo.tempUnits;
+        return weatherTemp;
     }
 
     private void playbackStateUpdate(int state) {
@@ -176,22 +170,29 @@ public class QuickspaceController implements NotificationListener.NotificationsC
         queryAndUpdateWeather();
     }
 
+    private void queryAndUpdateWeather() {
+        if (DEBUG) Log.d(TAG, "queryAndUpdateWeather.isOmniJawsEnabled " + mWeatherClient.isOmniJawsEnabled());
+        mWeatherInfo = null;
+        updateWeather();
+    }
+
     @Override
     public void weatherError(int errorReason) {
         Log.d(TAG, "weatherError " + errorReason);
-        if (errorReason == OmniJawsClient.EXTRA_ERROR_DISABLED) {
-            mWeatherInfo = null;
-            notifyListeners();
-        }
+        mWeatherInfo = null;
+        notifyListeners();
     }
 
     @Override
     public void updateSettings() {
         Log.i(TAG, "updateSettings");
-        queryAndUpdateWeather();
+        if (mWeatherClient.isOmniJawsEnabled()) {
+            updateWeather();
+        }
+        notifyListeners();
     }
 
-    private void queryAndUpdateWeather() {
+    private void updateWeather() {
         try {
             mWeatherClient.queryWeather();
             mWeatherInfo = mWeatherClient.getWeatherInfo();
