@@ -53,15 +53,9 @@ public class DateTextView extends DoubleShadowTextView {
     public void reloadDateFormat(boolean forcedChange) {
         String format;
         if (mDateFormat == null || forcedChange) {
-            String styleText;
-            Context context = getContext();
-            if (Utilities.useAlternativeQuickspaceUI(context)) {
-                styleText = context.getString(R.string.quickspace_date_format_minimalistic);
-            } else {
-                styleText = context.getString(R.string.quickspace_date_format);
-            }
-            mDateFormat = DateFormat.getInstanceForSkeleton(styleText, Locale.getDefault());
-            mDateFormat.setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE);
+            (mDateFormat = DateFormat.getInstanceForSkeleton(getContext()
+                    .getString(R.string.abbrev_wday_month_day_no_year), Locale.getDefault()))
+                    .setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE);
         }
         format = mDateFormat.format(System.currentTimeMillis());
         setText(format);
