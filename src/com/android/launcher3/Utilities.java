@@ -51,8 +51,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.hardware.biometrics.BiometricManager.Authenticators;
 import android.hardware.biometrics.BiometricPrompt;
-import android.icu.text.DateFormat;
-import android.icu.text.DisplayContext;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.CancellationSignal;
@@ -66,7 +64,6 @@ import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.text.style.TtsSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -179,10 +176,6 @@ public final class Utilities {
     public static final String KEY_ALLOW_WALLPAPER_ZOOMING = "pref_allow_wallpaper_zooming";
     public static final String KEY_STATUS_BAR = "pref_show_statusbar";
     public static final String KEY_BLUR_DEPTH = "pref_blur_depth";
-    public static final String DESKTOP_SHOW_QUICKSPACE = "pref_show_quickspace";
-    public static final String KEY_SHOW_ALT_QUICKSPACE = "pref_show_alt_quickspace";
-    public static final String KEY_SHOW_QUICKSPACE_PSONALITY = "pref_quickspace_psonality";
-    public static final String KEY_SHOW_QUICKSPACE_NOWPLAYING = "pref_quickspace_np";
     public static final String KEY_RECENTS_OPACITY = "pref_recents_opacity";
     public static final String KEY_APP_DRAWER_OPACITY = "pref_app_drawer_opacity";
     public static final String KEY_RECENTS_MEMINFO = "pref_recents_meminfo";
@@ -856,21 +849,6 @@ public final class Utilities {
         });
     }
 
-    public static String formatDateTime(Context context, long timeInMillis) {
-        try {
-            String format = "EEEE, MMM d";
-            String formattedDate;
-            DateFormat dateFormat = DateFormat.getInstanceForSkeleton(format, Locale.getDefault());
-            dateFormat.setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE);
-            formattedDate = dateFormat.format(timeInMillis);
-            return formattedDate;
-        } catch (Throwable t) {
-            Log.e(TAG, "Error formatting At A Glance date", t);
-            return DateUtils.formatDateTime(context, timeInMillis, DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH);
-        }
-
-    }
-
     public static boolean isWorkspaceEditAllowed(Context context) {
         SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
         return !prefs.getBoolean(InvariantDeviceProfile.KEY_WORKSPACE_LOCK, false);
@@ -973,26 +951,6 @@ public final class Utilities {
                 (int) context.getResources().getDimension(R.dimen.max_depth_blur_radius));
     }
 
-    public static boolean showQuickspace(Context context) {
-        SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
-        return prefs.getBoolean(DESKTOP_SHOW_QUICKSPACE, true);
-    }
-
-    public static boolean useAlternativeQuickspaceUI(Context context) {
-        SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
-        return prefs.getBoolean(KEY_SHOW_ALT_QUICKSPACE, false);
-    }
-
-    public static boolean isQuickspacePersonalityEnabled(Context context) {
-        SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
-        return prefs.getBoolean(KEY_SHOW_QUICKSPACE_PSONALITY, true);
-    }
-
-    public static boolean isQuickspaceNowPlaying(Context context) {
-        SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
-        return prefs.getBoolean(KEY_SHOW_QUICKSPACE_NOWPLAYING, true);
-    }
-
     public static int getRecentsOpacity(Context context) {
         SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
         return prefs.getInt(KEY_RECENTS_OPACITY, 40);
@@ -1027,4 +985,6 @@ public final class Utilities {
         SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
         return prefs.getBoolean(KEY_SINGLE_PAGE_CENTER, false);
     }
+=======
+>>>>>>> parent of 3c41f29f3f (Launcher3: Bring back QuickSpace events)
 }

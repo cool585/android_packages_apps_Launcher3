@@ -104,10 +104,6 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
             case Utilities.KEY_SEARCH_RADIUS:
             case Utilities.KEY_SHOW_HOTSEAT_BG:
             case Utilities.KEY_STATUS_BAR:
-            case Utilities.DESKTOP_SHOW_QUICKSPACE:
-            case Utilities.KEY_SHOW_ALT_QUICKSPACE:
-            case Utilities.KEY_SHOW_QUICKSPACE_NOWPLAYING:
-            case Utilities.KEY_SHOW_QUICKSPACE_PSONALITY:
             case Utilities.KEY_HOTSEAT_OPACITY:
             case Utilities.KEY_SHORT_PARALLAX:
             case Utilities.KEY_SINGLE_PAGE_CENTER:
