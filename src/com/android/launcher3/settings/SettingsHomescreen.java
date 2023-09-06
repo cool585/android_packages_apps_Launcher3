@@ -111,7 +111,6 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
             case Utilities.KEY_SHOW_QUICKSPACE_NOWPLAYING:
             case Utilities.KEY_SHOW_QUICKSPACE_WEATHER:
             case Utilities.KEY_SHOW_QUICKSPACE_PSONALITY:
-            case Utilities.KEY_DOCK_MUSIC_SEARCH:
             case Utilities.KEY_HOTSEAT_OPACITY:
             case Utilities.KEY_SHORT_PARALLAX:
             case Utilities.KEY_SINGLE_PAGE_CENTER:
